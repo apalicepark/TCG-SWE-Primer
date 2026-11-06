@@ -1,6 +1,6 @@
 # TCG-SWE-Primer
 
-Analyst/associate name: Alice Park
+Analyst/associate name: 
 
 > **Note:** If you get stuck, the `main` branch contains a complete reference implementation. You're also welcome to use the internet. If you use AI, finish the introduction first and read our guidance on using it effectively.
 
