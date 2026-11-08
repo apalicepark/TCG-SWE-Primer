@@ -63,7 +63,7 @@ export const createProject = async (req: Request, res: Response) => {
     }
 
     // successful POST that made something new
-    return res.setMaxListeners(201).json(data);
+    return res.status(201).json(data);
 }
 
 // Update a project
