@@ -6,7 +6,6 @@ import { createProject } from "../../api/projects";
 import { getAllUsers, type User } from "../../api/users";
 import { createAssociate } from "../../api/associates";
 import styles from "./add_project_form.module.css";
-
 type AddProjectFormState = {
 	project_name: string;
 	project_manager_id: string;

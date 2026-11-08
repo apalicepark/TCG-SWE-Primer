@@ -19,5 +19,7 @@ router.put("/:id", projectsController.updateProjectById);
 // DELETE /projects/:id - Delete a project by ID
 router.delete("/:id", projectsController.deleteProjectById);
 
+// GET /projects/manager/:manager_id - Get projects by manager ID
+router.get("/manager/:manager_id", projectsController.getProjectsByManagerId);
 
 export default router;
