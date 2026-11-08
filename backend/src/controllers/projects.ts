@@ -98,7 +98,7 @@ export const updateProjectById = async (req: Request, res: Response) => {
 };
 
 // Delete a project
-export const deleteProjectbyId = async (req: Request, res: Response) => {
+export const deleteProjectById = async (req: Request, res: Response) => {
     const projectId = req.params.id;
 
     const { data, error } = await supabase
