@@ -62,7 +62,7 @@ export const createProject = async (req: Request, res: Response) => {
 
 
 // Update a project
-export const updateProject = async (req: Request, res: Response) => {
+export const updateProjectById = async (req: Request, res: Response) => {
     const projectId = req.params.id;
     const { project_name, project_manager_id, project_description } = req.body;
     const updates: Record<string, unknown> = {};
@@ -98,7 +98,7 @@ export const updateProject = async (req: Request, res: Response) => {
 };
 
 // Delete a project
-export const deleteProject = async (req: Request, res: Response) => {
+export const deleteProjectbyId = async (req: Request, res: Response) => {
     const projectId = req.params.id;
 
     const { data, error } = await supabase
