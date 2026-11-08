@@ -67,5 +67,62 @@ export const createProject = async (req: Request, res: Response) => {
 }
 
 // Update a project
+export const updateProject = async (req: Request, res: Response) => {
+    const projectId = req.params.id;
+    const { name, managerId, description } = req.body;
+    const updates: Record<string, unknown> = {};
 
+    if (name !== undefined) updates.project_name = name;
+    if (description !== undefined) updates.project_description = description;
+
+    if (managerId !== undefined) {
+        const managerExists = await checkUserExists(managerId);
+        if (!managerExists) {
+            return res.status(404).json({ error: `User ${managerId} not found` });
+        }
+        updates.project_manager_id = managerId;
+    }
+
+    if (Object.keys(updates).length === 0) {
+        return res
+            .status(400)
+            .json({ error: "Provide at least one of name, managerId, description" });
+    }
+
+    const { data, error } = await supabase
+        .from("projects")
+        .update(updates) 
+        .eq("id", projectId)
+        .select()
+        .single();
+
+    if (error) {
+         if (error.code === "PGRST116") {
+            return res.status(404).json({ error: `Project ${projectId} not found` });
+        }
+        console.error("Error updating project:", error);
+        return res.status(500).json({ error: "Failed to update project" });
+    }
+    return res.json(data)
+}
 // Delete a project
+export const deleteProject = async (req: Request, res: Response) => {
+    const projectId = req.params.id;
+ 
+    const { data, error } = await supabase
+        .from("projects")
+        .delete()
+        .eq("id", projectId) // filter to prevent deletion of all projects
+        .select(); // returns deleted rows
+ 
+    if (error) {
+        console.error("Error deleting project:", error);
+        return res.status(500).json({ error: "Failed to delete project" });
+    }
+ 
+    if (!data || data.length === 0) {
+        return res.status(404).json({ error: `Project ${projectId} not found` });
+    }
+    
+    return res.json({ message: `Project ${projectId} deleted`, project: data[0] });
+};
