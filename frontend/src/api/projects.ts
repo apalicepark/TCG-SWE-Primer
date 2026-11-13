@@ -45,7 +45,9 @@ export const createProject = async (project: Omit<Project, "id">): Promise<Proje
         body: JSON.stringify(project),
     });
     if (!response.ok) {
-        throw new Error("Failed to create project");
+        // show the backend's error message (e.g. "Invalid project manager ID") if it sent one
+        const body = await response.json().catch(() => null);
+        throw new Error(body?.error ?? "Failed to create project");
     }
     const data = (await response.json()) as Project;
     return data;
